@@ -1,15 +1,18 @@
 
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { ProductContext } from "../Contexts/ProductContext";
 
-const Product = ({children, onDeleteProduct, id}) => {
+const Product = ({children, id}) => {
     
+    const {deleteProduct} = useContext(ProductContext)
     return (
         <>
             <div className="my-4">
                 <div className="card text-white bg-primary mb-3" >
                 {children}
                 </div>
-                <button onClick={()=>{onDeleteProduct(id)}} className="btn btn-danger">Delete</button>
+                <button onClick={()=> deleteProduct(id) } className="btn btn-danger">Delete</button>
         
             </div>
             </>

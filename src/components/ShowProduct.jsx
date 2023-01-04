@@ -1,21 +1,19 @@
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { ProductContext } from "../Contexts/ProductContext";
+
 const ShowProduct = () => {
 
+    const { products } = useContext(ProductContext)
     const { id } = useParams();
-    const navigate = useNavigate()
-    if (+id === 404) {
-        return (
-            <h1>Page Not Found</h1>
-        )
-    };
-    const redirectionToHomePage = () => {
-        navigate('/')
-    }
+    const myproduct = products.find(product => product.id === +id)
+
     return (
         <>
-            <h1>Show Product Here</h1>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti!</div>
-        <button onClick={redirectionToHomePage} className="btn btn-success">Home Page</button>
+            <div className="text-center">
+                <h1 >{myproduct.label}</h1>
+                <button className="btn btn-warning">{myproduct.price}</button>
+            </div>
         </>
     )
 }

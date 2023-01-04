@@ -1,40 +1,26 @@
 import Counter from "./Counter";
 import Product from "./Product";
-import { useState } from "react";
-import { v4 as uuid } from 'uuid'
+import { useState, useContext } from "react";
+import { useNavigate} from "react-router-dom";
+import { v4 as uuid } from 'uuid';
+import { ProductContext } from "../Contexts/ProductContext";
+
 
 function Products() {
 
+    const { products, addProduct} = useContext(ProductContext)
+    const Navigete = useNavigate();
+
+    const showProduct = (id) => {
+        Navigete(`/product/${id}`)
+    }
     
     let showList = true;
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState(0);
     const [message, setMessage] = useState("")
-    const [products, setProducts] = useState([
-        {
-            id: 1,
-            label: "Iphone 13",
-            price: 1250
-        },
-        {
-            id: 2,
-            label: "Sumsung",
-            price: 1050
-        },
-        {
-            id: 3,
-            label: "Vivo",
-            price: 850
-        }
-    ]);
-    const deleteProduct = (id) => {
-        let resteProducts = products.filter(product =>
-            product.id !== id
-        )
-        setProducts((prev) => {
-            return resteProducts
-        })
-    };
+    
+    
     const titleInput = (e) => {
         if (e.target.value === "") {
             setMessage("title is required")
@@ -55,29 +41,35 @@ function Products() {
             label: title,
             price
         }
-        setProducts([newProduct, ...products]);
+        addProduct(newProduct);
 
         setTitle("");
         setPrice(0)
     }
     return (
         <>
-            <h1>Learn how to create apps with react 2022</h1>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit ratione et iusto qui suscipit in saepe autem ipsam omnis fugiat dolorum quos mollitia, eos quas corporis doloribus beatae eligendi excepturi.</p>
-            
             <form onSubmit={submitForm}>
-                <div className="form-group my-2">
-                    <label htmlFor="" className="form-label">Title</label>
-                    <input defaultValue={title} onChange={titleInput} type="text" className="form-control" />
-                    {message && (
-                        <div className="alert alert-warning">{message}</div>
-                    )}
+                <div className="row">
+                    <div className="col">
+                        <div className="form-group my-2">
+                        <label htmlFor="" className="form-label">Title</label>
+                        <input defaultValue={title} onChange={titleInput} type="text" className="form-control" />
+                        {message && (
+                            <div className="alert alert-warning">{message}</div>
+                        )}
+                    </div>
                 </div>
-                <div className="form-group my-2">
-                    <label htmlFor="" className="form-label">Price</label>
-                    <input value={price} onChange={priceInput} type="number" className="form-control" />
+                    <div className="col">  
+                        <div className="form-group my-2">
+                        <label htmlFor="" className="form-label">Price</label>
+                        <input value={price} onChange={priceInput} type="number" className="form-control" />
+                    </div>
+
                 </div>
-                <button  className="btn btn-warning my-2 mb-4">Save</button>
+                </div>
+                
+                
+                <button  className="btn btn-warning my-2 mb-2">Save</button>
             </form>
             
 
@@ -87,7 +79,7 @@ function Products() {
                 <div>
                     {products.map((product, index) => (
                         <div key={index}>
-                            <Product id={product.id}  onDeleteProduct={deleteProduct}>
+                            <Product id={product.id}>
                                 <div className="card-body">
                                     <p>Lorem ipsum dolor sit.</p>
                                     <h4 className="card-title">{product.label}</h4>
@@ -95,6 +87,7 @@ function Products() {
                                         <button className="btn btn-success">
                                             {product.price}
                                         </button>
+                                        <button onClick={()=>showProduct(product.id)} className="btn btn-warning mx-4">Show Product</button>
                                     </p>
                                 </div>
                             </Product>

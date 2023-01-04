@@ -5,17 +5,20 @@ import Products from './components/Products';
 import About from './components/About';
 import Contact from './components/Contact';
 import ShowProduct from './components/ShowProduct';
+import { ProductProvider } from './Contexts/ProductContext';
 
 function App() {
   return (
     <Router>
+      <ProductProvider>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Products />} />
-        <Route path="/product/:id/:slug" element={<ShowProduct />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Products />} />
+          <Route path="/product/:id" element={<ShowProduct />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </ProductProvider>
     </Router>
   );
 }

@@ -6,16 +6,18 @@ import About from './components/About';
 import Contact from './components/Contact';
 import ShowProduct from './components/ShowProduct';
 import { ProductProvider } from './Contexts/ProductContext';
+import ArticleList from './components/articles/ArticleList';
 
 function App() {
   return (
     <Router>
       <ProductProvider>
-      <Navbar />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Products />} />
           <Route path="/product/:id" element={<ShowProduct />} />
           <Route path="/about" element={<About />} />
+          <Route path="/blog" element={<ArticleList />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </ProductProvider>

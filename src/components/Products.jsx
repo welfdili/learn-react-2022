@@ -1,6 +1,6 @@
 import Counter from "./Counter";
 import Product from "./Product";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { useNavigate} from "react-router-dom";
 import { v4 as uuid } from 'uuid';
 import { ProductContext } from "../Contexts/ProductContext";
@@ -16,8 +16,8 @@ function Products() {
     }
     
     let showList = true;
-    const [title, setTitle] = useState("");
-    const [price, setPrice] = useState(0);
+    const title = useRef("");
+    const price = useRef(0)
     const [message, setMessage] = useState("")
     
     
@@ -28,23 +28,22 @@ function Products() {
             setMessage("title must be more than 3 characters")
         } else {
             setMessage("")
-            setTitle(e.target.value)
+            
         }
     };
     const priceInput = (e) => {
-        setPrice(e.target.value)
+        
     };
     const submitForm = (e) => {
         e.preventDefault()
         let newProduct = {
             id: uuid(),
-            label: title,
-            price
+            label: title.current.value,
+            price: price.current.value
         }
         addProduct(newProduct);
 
-        setTitle("");
-        setPrice(0)
+        
     }
     return (
         <>
@@ -52,8 +51,8 @@ function Products() {
                 <div className="row">
                     <div className="col">
                         <div className="form-group my-2">
-                        <label htmlFor="" className="form-label">Title</label>
-                        <input defaultValue={title} onChange={titleInput} type="text" className="form-control" />
+                        <label htmlFor="title" className="form-label">Title</label>
+                        <input id="title" ref={title} onChange={titleInput} type="text" className="form-control" />
                         {message && (
                             <div className="alert alert-warning">{message}</div>
                         )}
@@ -61,8 +60,8 @@ function Products() {
                 </div>
                     <div className="col">  
                         <div className="form-group my-2">
-                        <label htmlFor="" className="form-label">Price</label>
-                        <input value={price} onChange={priceInput} type="number" className="form-control" />
+                        <label htmlFor="price" className="form-label">Price</label>
+                        <input id="price" ref={price} onChange={priceInput} type="number" className="form-control" />
                     </div>
 
                 </div>
@@ -81,7 +80,6 @@ function Products() {
                         <div key={index}>
                             <Product id={product.id}>
                                 <div className="card-body">
-                                    <p>Lorem ipsum dolor sit.</p>
                                     <h4 className="card-title">{product.label}</h4>
                                     <p className="card-text">
                                         <button className="btn btn-success">

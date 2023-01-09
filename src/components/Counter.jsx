@@ -9,14 +9,14 @@ const Counter = () => {
     return (
         <>
             <hr />
-            <div class="row text-center">
-                <div class="col">
+            <div className="row text-center">
+                <div className="col">
                     <span>My Counter</span>
                 </div>
-                <div class="col">
+                <div className="col">
                     <button className="btn btn-success">{count}</button>
                 </div>
-                <div class="col">
+                <div className="col">
                     <button onClick={increment}>Increment</button>
                 </div>
             </div>

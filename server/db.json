@@ -1,9 +1,3 @@
 {
-  "articles": [
-    {
-      "title": "Learn ReactJS",
-      "description": "Learn ReactJS 2022",
-      "id": 3
-    }
-  ]
+  "articles": []
 }
